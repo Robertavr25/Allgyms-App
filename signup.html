@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Înregistrare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <form method="POST">
+        <h2>Înregistrare</h2>
+
+        <input type="text" name="name" placeholder="Nume complet" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password_hash" placeholder="Parolă" required>
+        <input type="text" name="phone" placeholder="Telefon" required>
+        <input type="submit" value="Creează cont">
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        <p>Ai deja cont? <a href="/login">Autentifică-te aici</a></p>
+    </form>
+</body>
+</html>
