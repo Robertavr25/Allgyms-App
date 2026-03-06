@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil Utilizator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        .main-container {
+            max-width: 800px;
+            margin: auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .qr-image {
+            max-width: 200px;
+            display: block;
+            margin-top: 1rem;
+        }
+
+        .button-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.8rem 1.2rem;
+            background-color: #4a69bd;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-link:hover {
+            background-color: #3c54a3;
+        }
+
+        ul {
+            margin-top: 0.5rem;
+            margin-left: 1rem;
+        }
+
+        .section {
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h2 style="text-align: center;">Bine ai venit, {{ session.user_name }}!</h2>
+
+        {% if subs %}
+            <div class="section">
+                <h3>Abonament activ:</h3>
+                <ul>
+                    <li>Start: {{ subs.start_date }}</li>
+                    <li>Final: {{ subs.end_date }}</li>
+                    <li>Status: {{ subs.status }}</li>
+                </ul>
+                {% if qr_image %}
+                <img src="{{ qr_image }}" alt="Cod QR" class="qr-image">
+                {% endif %}
+            </div>
+        {% elif future_sub %}
+            <p>Ai un abonament activ care va începe pe <strong>{{ future_sub.start_date }}</strong> și se va încheia pe <strong>{{ future_sub.end_date }}</strong>.</p>
+        {% else %}
+        <p>Nu ai abonament activ.</p>
+        {% endif %}
+
+
+        <div class="section">
+            <h3>Ultimele vizite:</h3>
+            {% if visits %}
+                <ul>
+                    {% for visit in visits %}
+                        <li>{{ visit.visit_date }} {{ visit.visit_time }} min – {{ visit.gym_name }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Nu ai înregistrări de vizite.</p>
+            {% endif %}
+        </div>
+
+        <!-- Buton de căutare săli -->
+        <div class="section" style="text-align: center;">
+            <a href="/cumpara" class="button-link">Cumpara Abonament</a>
+            <a href="/search_gyms" class="button-link">Caută săli de fitness</a>
+        </div>
+
+        <p style="text-align: center; margin-top: 2rem;">
+            
+
+            <a href="/logout">Deconectare</a>
+        </p>
+
+        <p style="text-align: center;  margin-top: 2rem;">
+
+        <a href="#" class="button-link delete-link" style="background-color:#c0392b;" onclick="confirmAndDelete() ">Șterge contul</a>
+
+        
+        <script>
+            function confirmAndDelete() {
+                if (confirm("Ești sigur că vrei să îți ștergi contul? Această acțiune este ireversibilă.")) {
+                    fetch("/delete_account", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                    })
+                    .then(response => {
+                    if (response.redirected) {
+                    window.location.href = response.url;
+                    }
+                    });
+                }
+            }
+        </script>  
+
+        </p>
+
+    </div>
+</body>
+</html>
