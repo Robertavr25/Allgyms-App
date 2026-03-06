@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Căutare săli</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        .search-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+        }
+
+        .search-container input[type="text"] {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .search-container input[type="submit"] {
+            background-color: #4a69bd;
+            color: white;
+            padding: 0.8rem;
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-container input[type="submit"]:hover {
+            background-color: #3c54a3;
+        }
+
+        .gym-list {
+            margin-top: 2rem;
+        }
+
+        .gym-card {
+            background: #f8f8f8;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .gym-card h4 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .gym-card p {
+            margin: 0;
+            color: #555;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #4a69bd;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .search-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <h2>Caută săli de fitness</h2>
+        <form method="GET">
+            <input type="text" name="city" placeholder="Introdu orașul">
+            <input type="submit" value="Caută">
+        </form>
+
+        {% if gyms %}
+    <div class="gym-list">
+        {% for gym in gyms %}            <div class="gym-card">
+                <h4>{{ gym.name }}</h4>
+                <p>Oraș: {{ gym.city }}</p>
+                <p>Adresă: {{ gym.address }}</p>
+            </div>
+        {% endfor %}
+    </div>
+        {% elif request.args.get('city') %}
+            <p style="text-align:center; margin-top:1rem;">Nu s-au găsit săli în orașul specificat.</p>
+        {% endif %}
+
+        <a href="/">Înapoi la profil</a>
+    </div>
+</body>
+</html>
