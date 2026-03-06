@@ -1,0 +1,99 @@
+/* Resetări de bază */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fundal și fonturi */
+body {
+    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+    background: linear-gradient(90deg, #74ebd5, #9face6);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.qr-image {
+    max-width: 200px;
+    display: block;
+    margin: 1rem auto;
+}
+
+
+/* Containerul formularului */
+form {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    max-width: 350px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    /* ADĂUGĂ acestea: */
+    margin: 0 auto;
+    align-items: center;
+}
+
+/* Titlul */
+h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+/* Etichete și câmpuri */
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="password"],
+input[type="submit"] {
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    color: #888;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 100%;
+}
+
+
+/* Butonul de submit */
+input[type="submit"] {
+    background-color: #4a69bd;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #3c54a3;
+}
+
+/* Link înregistrare */
+p {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+a {
+    color: #4a69bd;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Mesaje de eroare */
+ul {
+    margin-top: 1rem;
+    color: black;
+    list-style: none;
+    text-align: center;
+}
