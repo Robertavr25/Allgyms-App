@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Abonament</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        .main-container {
+            max-width: 800px;
+            margin: auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .qr-image {
+            max-width: 200px;
+            display: block;
+            margin-top: 1rem;
+        }
+
+        .button-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.8rem 1.2rem;
+            background-color: #4a69bd;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-link:hover {
+            background-color: #3c54a3;
+        }
+
+        ul {
+            margin-top: 0.5rem;
+            margin-left: 1rem;
+        }
+
+        .section {
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h2 style="text-align: center;">Bine ai venit, {{ session.user_name }}!</h2>
+
+        {% if subs %}
+            <div class="section">
+                <h3>Abonament activ:</h3>
+                <ul>
+                    <li>Start: {{ subs.start_date }}</li>
+                    <li>Final: {{ subs.end_date }}</li>
+                </ul>
+            
+            </div>
+        {% else %}
+            <p>Nu ai abonament activ.</p>
+        {% endif %}
+
+        <div class="section">
+            <form method="post">
+                <input type="text" name="card_nmb" placeholder="Numărul Cardului" required pattern="\d{16}" title="Cardul trebuie să conțină exact 16 cifre">
+    
+                <input type="text" name="pin" placeholder="PIN" required pattern="\d{4}" title="PIN-ul trebuie să conțină exact 4 cifre">
+    
+                <input type="text" name="cvv" placeholder="CVV" required pattern="\d{3}" title="CVV-ul trebuie să conțină exact 3 cifre">
+                <h4>Data de expirare a cardului:</h4>
+                <input type="date" name="data_exp" placeholder="Data de expirare a cardului" required>
+                {% if not subs or subs.status != 'active' %}
+                    <h4>Data de începere a abonamentului:</h4>
+                    <input type="date" name="data_act" id="data_act" placeholder="Data de activare a abonamentului" required>
+                {% else %}
+                    <p style="color: #333;"><strong>Ai deja un abonament activ.</strong> Se va prelungi automat de la data de sfârșit: <strong>{{ subs.end_date }}</strong>.</p>
+                {% endif %}
+
+    
+                <input type="submit" value="Cumpără">
+            </form>
+
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+
+
+        <div class="section" style="text-align: center;">
+            <a href="/">Înapoi la profil</a>
+        </div>
+
+        
+    </div>
+</body>
+</html>
